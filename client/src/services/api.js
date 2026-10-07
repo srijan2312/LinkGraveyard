@@ -7,7 +7,7 @@ import axios from 'axios';
 const api = axios.create({
   // In development Vite proxies /api to the Express server (see vite.config.js).
   // In production the built files are served by the same Express server.
-  baseURL: import.meta.env.VITE_API_URL || '/api',,
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   timeout: 60000, // link checks can take a while (we allow several 12s checks in a row)
 });
 
