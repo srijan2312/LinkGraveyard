@@ -74,6 +74,42 @@ LinkGraveyard provides a focused way to keep important resources organized while
 
 # ✨ Features
 
+## 📑 Table of Contents
+
+- [📖 Overview](#-overview)
+- [🎯 The Problem](#-the-problem)
+- [✨ Features](#-features)
+  - [🔐 Authentication](#-authentication)
+  - [🔗 Link Management](#-link-management)
+  - [🩺 Link Health Monitoring](#-link-health-monitoring)
+  - [🔄 Redirect Detection](#-redirect-detection)
+  - [📜 Link Check History](#-link-check-history)
+  - [📊 Dashboard](#-dashboard)
+  - [🗂️ Organization](#-organization)
+  - [🔎 Search & Filtering](#-search--filtering)
+  - [⚙️ Settings](#-settings)
+  - [📱 Responsive UI](#-responsive-ui)
+- [🏗️ System Architecture](#️-system-architecture)
+- [🔄 How It Works](#-how-it-works)
+- [🗄️ Data Model](#️-data-model)
+- [🔐 Security](#-security)
+- [🛠️ Technology Stack](#️-technology-stack)
+- [📁 Project Structure](#-project-structure)
+- [⚙️ Getting Started](#️-getting-started)
+- [🔧 Environment Variables](#-environment-variables)
+- [▶️ Running Locally](#️-running-locally)
+- [🧪 Testing](#-testing)
+- [🔌 REST API](#-rest-api)
+- [📊 Link Health Model](#-link-health-model)
+- [📜 History Model](#-history-model)
+- [🎨 Design Direction](#-design-direction)
+- [🧠 Design Principles](#-design-principles)
+- [🚢 Deployment](#-deployment)
+- [🔄 Development Workflow](#-development-workflow)
+- [🔮 Future Improvements](#-future-improvements)
+- [🔗 Project Links](#-project-links)
+- [📄 License](#-license)
+
 ## 🔐 Authentication
 
 - User registration
