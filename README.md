@@ -1,281 +1,604 @@
-# LinkGraveyard — Web Resource Health & Preservation Tracker
+# LinkGraveyard
 
-A full-stack web application that helps users save, organize, and monitor important web resources. It checks saved URLs for availability, detects redirects and broken links, and maintains a history of link health over time.
+> A personal web-resource archive that helps you save, organize, and monitor the health of important web links before they disappear.
 
-## Overview
+## 🌐 Live Project
 
-People save useful URLs every day — tutorials, documentation, articles, GitHub repos, tools. Over time, some of those links move, redirect somewhere unexpected, or disappear entirely. **LinkGraveyard** is a personal preservation and monitoring app for your saved links: save them, organize them with categories and tags, and get a clear picture of which resources are healthy, which moved, and which are dead.
+- **Live Website:** https://link-graveyard.vercel.app
+- **GitHub Repository:** https://github.com/srijan2312/LinkGraveyard
+- **Backend API:** https://linkgraveyard.onrender.com
 
-## Problem
+---
 
-You bookmark a useful tutorial today. Six months later, the page is gone — moved, deleted, or abandoned. Your bookmark still sits there, pointing at nothing. Link rot is silent: you only discover it when you need the resource most.
+## 📌 Overview
 
-## Solution
+LinkGraveyard is a full-stack MERN application for saving web resources and monitoring whether those resources are still reachable.
 
-LinkGraveyard watches your saved links for you:
+Instead of saving links and forgetting about them, users can:
 
-1. **Save** URLs with titles, notes, categories, and tags.
-2. **Check** whether each URL still works — manually per link, or your whole collection at once.
-3. **Track** every check in a history timeline, so you can see exactly when a resource changed.
+- Save important URLs
+- Organize links using categories and tags
+- Check whether a URL is healthy, redirected, broken, or never checked
+- View link-check history
+- Search and filter saved resources
+- Manually check saved links
+- Manage their profile and account settings
 
-## Features
+The project is intentionally built with a simple and explainable architecture suitable for understanding and demonstrating full-stack development fundamentals.
 
-- JWT authentication (register, login, logout, protected routes)
-- Dashboard: stat cards, health-overview chart, recently broken links, recent activity, quick actions
-- Save links with title, URL, notes, category, and tags (+ duplicate prevention)
-- Manual **Check Now** per link with loading state
-- **Check All Links** with real progress ("Checking 12 / 40")
-- Status system: **Healthy** / **Redirected** / **Broken** / **Never checked**
-- Redirect detection that **preserves the original URL** and stores the final URL separately
-- Per-link status **history timeline** + a global Link History feed
-- Search across title, URL, domain, tags, and notes
-- Filters by status and category; sorting (recent, oldest, recently checked, status)
-- Categories page (defaults + your own custom categories)
-- Bulk actions: check selected, delete selected, change category
-- Settings: profile, appearance (two designed themes), security, account, and a danger zone with **account deletion**
-- Real **Delete Account**: removes the user, all links, and all check history after typed-email confirmation, then lands on the landing page with a dismissible success notification
-- Logout and account deletion both land cleanly on the landing page (no auth-page flash)
-- Auth pages with back-to-home button and password visibility toggle
-- Theme toggle (sun/moon) on every page: landing nav, auth pages, sidebar, and mobile top bar
-- Collapsible sidebar — shrinks to an icon-only rail, choice persisted per device
-- Search/filter/sort/page persist per tab (sessionStorage) — going to a link's detail page and back restores your exact view; `?status=`/`?category=` deep-links from dashboard cards always win
-- Favicons next to link titles with a graceful letter-tile fallback (a broken image can never appear)
-- Delete confirmations are double-click safe: buttons disable while the request is in flight
-- Category picker is a real dropdown with a "+ New category…" option (reliable on mobile)
-- Two intentionally designed themes — "Midnight Archive" (dark) and "Paper Archive" (light) — with a persisted switcher
-- Responsive design, empty states everywhere, accessible forms
+---
 
-## Design
+## ✨ Features
 
-LinkGraveyard has its own "Archive" visual identity: serif display type for headings and the brand (a card-catalog feel), monospace for URLs, badges and metadata (the developer-tool voice), and warm, restrained palettes. The dark **Midnight Archive** theme uses warm near-black surfaces (never pure black) with brass accents under a soft amber glow; the light **Paper Archive** theme uses warm off-white paper (never pure white) with a controlled plum accent. Status badges are styled like archive stamps. The theme switcher persists the user's choice in `localStorage`, and one shared `useTheme` hook keeps every toggle and the Settings cards in sync.
+### 🔐 Authentication
 
-## Tech Stack
+- User registration and login
+- JWT-based authentication
+- Password hashing with bcrypt
+- Protected routes
+- Persistent login sessions
+- Logout
+- Profile name update
+- Password change
+- Account deletion
 
-| Layer      | Technology                                              |
-| ---------- | ------------------------------------------------------- |
-| Frontend   | React 18, React Router 6, Axios, Lucide icons, plain CSS |
-| Backend    | Node.js, Express 4                                      |
-| Database   | MongoDB + Mongoose                                      |
-| Auth       | JWT (jsonwebtoken) + bcryptjs                           |
-| Build/dev  | Vite, npm, dotenv                                       |
-| Tests      | node:test + supertest + mongodb-memory-server           |
+### 🔗 Link Management
 
-## Architecture
+- Add links
+- Edit links
+- Delete links
+- View link details
+- Add descriptions
+- Organize links using categories
+- Add tags
+- Search and filter saved links
 
-```
-Browser (React SPA)
-   │  JSON over HTTP (/api/*)
-   ▼
-Express API
-   ├─ routes/        → URL paths
-   ├─ middleware/    → auth (JWT verify), errorHandler
-   ├─ controllers/   → request logic (auth, links)
-   ├─ utils/         → checkUrl (the link checker), validateUrl
-   └─ models/        → Mongoose schemas
+### ❤️ Link Health Monitoring
+
+Each saved link can have one of four states:
+
+| Status | Meaning |
+|---|---|
+| Never Checked | The link has not been checked yet |
+| Healthy | The URL responded successfully |
+| Redirected | The original URL redirects somewhere else |
+| Broken | The request failed or returned an unsuccessful HTTP response |
+
+Each check can record:
+
+- HTTP status code
+- Response time
+- Check timestamp
+- Redirect information
+- Error information
+
+### 📜 Check History
+
+Link-check results are recorded so users can review previous health checks for their saved resources.
+
+### 📊 Dashboard
+
+The dashboard provides an overview of:
+
+- Total links
+- Healthy links
+- Redirected links
+- Broken links
+- Never-checked links
+
+### 🎨 User Experience
+
+- Dark archive-inspired interface
+- Light theme
+- Responsive design
+- Loading states
+- Empty states
+- Error states
+- Confirmation dialogs
+- Keyboard-friendly controls
+- Mobile-friendly pages
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- React 18
+- JavaScript ES6+
+- Vite
+- React Router
+- Axios
+- Lucide React
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcryptjs
+- Axios
+- CORS
+- dotenv
+
+### Deployment
+
+- Vercel — Frontend
+- Render — Backend
+- MongoDB Atlas — Database
+
+---
+
+## 🏗️ Architecture
+
+The application uses a simple three-part architecture:
+
+    ┌─────────────────────────────┐
+    │           Vercel            │
+    │       React + Vite          │
+    │          Frontend           │
+    └──────────────┬──────────────┘
+                   │
+                   │ HTTPS / REST API
+                   ▼
+    ┌─────────────────────────────┐
+    │           Render            │
+    │      Node.js + Express      │
+    │          Backend            │
+    └──────────────┬──────────────┘
+                   │
+                   │ Mongoose
+                   ▼
+    ┌─────────────────────────────┐
+    │       MongoDB Atlas         │
+    │          Database           │
+    └─────────────────────────────┘
+
+The frontend communicates with the backend through REST APIs.
+
+The backend handles:
+
+- Authentication
+- Authorization
+- Link management
+- Link health checks
+- Check history
+
+MongoDB stores users, links, and link-check history.
+
+---
+
+## 📁 Project Structure
+
+    LinkGraveyard/
+    │
+    ├── client/
+    │   ├── public/
+    │   ├── src/
+    │   │   ├── components/
+    │   │   ├── context/
+    │   │   ├── pages/
+    │   │   ├── services/
+    │   │   ├── App.jsx
+    │   │   └── main.jsx
+    │   ├── package.json
+    │   ├── vite.config.js
+    │   └── vercel.json
+    │
+    ├── server/
+    │   ├── controllers/
+    │   ├── middleware/
+    │   ├── models/
+    │   ├── routes/
+    │   ├── services/
+    │   ├── scripts/
+    │   ├── tests/
+    │   ├── server.js
+    │   └── package.json
+    │
+    ├── .env.example
+    ├── .gitignore
+    ├── INTERVIEW_QA.md
+    ├── package.json
+    └── README.md
+
+---
+
+## 🗄️ Database Design
+
+The application uses MongoDB with Mongoose models.
+
+### User
+
+Stores:
+
+- Name
+- Email
+- Password hash
+- Timestamps
+
+Passwords are never stored as plain text.
+
+### Link
+
+Stores:
+
+- User ownership
+- URL
+- Title/name
+- Description
+- Category
+- Tags
+- Current health status
+- Last checked information
+- Redirect information
+- Timestamps
+
+### LinkCheckHistory
+
+Stores historical results for link health checks.
+
+This allows users to review how the health of a saved resource changes over time.
+
+---
+
+## 🔐 Authentication Flow
+
+LinkGraveyard uses JWT authentication.
+
+    User registers or logs in
+             ↓
+    Backend validates credentials
+             ↓
+    Backend creates JWT
+             ↓
+    Frontend stores token
+             ↓
+    Axios sends token with protected requests
+             ↓
+    Backend middleware verifies token
+             ↓
+    User-specific data is returned
+
+Protected resources also use ownership checks so users cannot access another user's links.
+
+---
+
+## 🔎 Link Health Checking
+
+The backend performs server-side HTTP checks.
+
+The application distinguishes between a redirect and a healthy final destination.
+
+    Original URL
          │
          ▼
-      MongoDB (3 collections: users, links, linkcheckhistories)
-```
+    HTTP request
+         │
+         ├── 2xx ───────────────► Healthy
+         │
+         ├── 3xx ───────────────► Redirected
+         │
+         └── 4xx/5xx/network ───► Broken
 
-The frontend is a single-page app. In development, Vite serves it on `:5173` and proxies `/api` to Express on `:5000`. In production (`NODE_ENV=production`), Express serves the built files from `client/dist` itself — one server, one deploy.
+The result is stored so users can review previous checks.
 
-## Project Structure
+---
 
-```
-linkgraveyard/
-├── client/                  # React frontend (Vite)
-│   ├── src/
-│   │   ├── components/      # Logo, StatusBadge, Layout, modals, ...
-│   │   ├── pages/           # Landing, Login, Register, Dashboard, MyLinks,
-│   │   │                    # AddLink, LinkDetail, Categories, LinkHistory, Settings
-│   │   ├── context/         # AuthContext — global login state
-│   │   ├── services/        # api.js — axios instance + 401 handling
-│   │   ├── hooks/           # useLinks (search/filter), useCheckAll (progress)
-│   │   ├── utils/           # format.js — time-ago, domain, status labels
-│   │   ├── App.jsx          # route map
-│   │   ├── main.jsx         # entry point
-│   │   └── styles.css       # entire design system (dark-first)
-│   └── package.json
-├── server/
-│   ├── config/db.js         # MongoDB connection
-│   ├── controllers/         # authController.js, linkController.js
-│   ├── middleware/          # auth.js (JWT), errorHandler.js
-│   ├── models/              # User, Link, LinkCheckHistory
-│   ├── routes/              # authRoutes.js, linkRoutes.js
-│   ├── utils/               # checkUrl.js (the checker), validateUrl.js
-│   ├── scripts/seed.js      # demo data (dev only)
-│   ├── tests/api.test.js    # 13 API tests
-│   └── server.js            # entry point
-├── README.md
-├── INTERVIEW_QA.md
-└── .env.example
-```
+## 🛡️ Security Considerations
 
-## How It Works (link checking)
+Because the backend makes HTTP requests to user-provided URLs, URL checking is treated as a security-sensitive operation.
 
-`server/utils/checkUrl.js` sends one HTTP request per URL **with redirects disabled** (`maxRedirects: 0`), so a redirect is visible instead of silently followed:
+The project uses or is designed around protections such as:
 
-| Response            | Status       | Notes                                                        |
-| ------------------- | ------------ | ------------------------------------------------------------ |
-| 2xx                 | **healthy**      | The resource responds                                    |
-| 3xx                 | **redirected**   | The `Location` header is resolved and stored as `finalUrl` |
-| 4xx / 5xx           | **broken**       | The server answered, but the resource isn't available      |
-| Timeout / DNS error | **never_checked**| Temporary failure — not marked dead                        |
-| SSL certificate error | **never_checked** | Expired/self-signed/wrong-hostname cert — its own message |
-| Private/internal IP | **never_checked**| Blocked on purpose (SSRF protection)                       |
+- HTTP/HTTPS URL validation
+- Request timeouts
+- Redirect handling
+- Avoiding unnecessary response-body downloads
+- Protection against local/private infrastructure where applicable
+- Authentication middleware
+- User ownership checks
+- Password hashing
+- Environment variables for secrets
+- CORS configuration
+- `.env` excluded from Git
 
-Each check updates the link (`status`, `httpStatus`, `finalUrl`, `lastChecked`) **and** appends a `LinkCheckHistory` document — that's what powers the history timeline. A 12-second timeout guarantees a user-supplied URL can never hang the server. Redirects are never followed (`maxRedirects: 0`) — the first 3xx response is recorded as `redirected` with its `Location` header, so a redirect can never be misreported as healthy.
+Production secrets such as the MongoDB connection string and JWT secret are stored in deployment environment variables rather than committed to GitHub.
 
-The four statuses use one consistent representation everywhere — frontend, backend, and database: `healthy`, `redirected`, `broken`, `never_checked`.
+---
 
-## Authentication (JWT flow)
+## ⚙️ Local Development
 
-1. Register/login → server verifies credentials → signs a JWT (`{ id }`, 7-day expiry) with `JWT_SECRET`.
-2. The frontend stores the token in `localStorage` and sends it as `Authorization: Bearer <token>` on every request (axios interceptor). Failed logins return clear messages: `No account found with this email.` (404) or `Incorrect password. Please try again.` (401).
-3. The `auth` middleware verifies the token, loads the user, and attaches it as `req.user`.
-4. Controllers **always** filter by `req.user._id` — never by any id from the request body. That's what keeps users' data isolated.
-5. On 401 (expired/invalid token), the axios interceptor clears the token and redirects to login.
+### Prerequisites
 
-Passwords are hashed with bcrypt (cost factor 10) via a Mongoose pre-save hook and are never returned by the API.
+Install:
 
-## Database Schema
+- Node.js
+- npm
+- MongoDB or MongoDB Atlas
+- Git
 
-**users** — `name`, `email` (unique), `password` (hashed, `select: false`), timestamps.
+### Clone the repository
 
-**links** — `user` (ref → User), `url` (unique per user), `title`, `description`, `category` (string), `tags[]`, `status` (healthy/redirected/broken/unknown), `httpStatus`, `finalUrl`, `responseTime`, `lastChecked`, timestamps.
+    git clone https://github.com/srijan2312/LinkGraveyard.git
+    cd LinkGraveyard
 
-**linkcheckhistories** — `link` (ref → Link), `user` (ref → User, for fast per-user queries), `status`, `httpStatus`, `finalUrl`, `responseTime`, `errorMessage`, `checkedAt`. Deleting a link deletes its history.
+### Configure the backend
 
-Why a separate history collection instead of an array on the link? A link checked weekly for years would grow one document without bound; a separate collection keeps the link document small and lets history be queried/paginated independently.
+    cd server
+    npm install
 
-## API Endpoints
+Create a `.env` file inside `server/`.
 
-| Method | Endpoint                  | Auth | Description                          |
-| ------ | ------------------------- | ---- | ------------------------------------ |
-| POST   | `/api/auth/register`      | No   | Create account → returns JWT         |
-| POST   | `/api/auth/login`         | No   | Log in → returns JWT                 |
-| GET    | `/api/auth/me`            | Yes  | Restore session from token           |
-| PUT    | `/api/auth/profile`       | Yes  | Update name                          |
-| PUT    | `/api/auth/password`      | Yes  | Change password                      |
-| GET    | `/api/links`              | Yes  | List links (search/filter/sort/page) |
-| POST   | `/api/links`              | Yes  | Save a link (optional immediate check) |
-| GET    | `/api/links/stats`        | Yes  | Dashboard counts + recently broken  |
-| GET    | `/api/links/categories`   | Yes  | All categories in use                |
-| POST   | `/api/links/check-all`    | Yes  | Check links (accepts `{ ids }`)      |
-| POST   | `/api/links/bulk-delete`  | Yes  | Delete many links                    |
-| POST   | `/api/links/bulk-category`| Yes  | Change category for many links       |
-| GET    | `/api/links/history/recent`| Yes | Global check-history feed            |
-| GET    | `/api/links/:id`          | Yes  | One link (ownership-checked)         |
-| PUT    | `/api/links/:id`          | Yes  | Edit title/notes/category/tags       |
-| DELETE | `/api/links/:id`          | Yes  | Delete link + its history            |
-| POST   | `/api/links/:id/check`    | Yes  | Check Now — re-check one link        |
-| GET    | `/api/links/:id/history`  | Yes  | Per-link check timeline              |
+Example:
 
-## Installation
+    MONGODB_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+    FRONTEND_URL=http://localhost:5173
 
-```bash
-# 1. Clone the repository
-git clone <your-repo-url> linkgraveyard
-cd linkgraveyard
+Do not commit the `.env` file.
 
-# 2. Backend setup
-cd server
-npm install
-cd ..
-cp .env.example .env        # then fill in your values (see below)
+### Start the backend
 
-# 3. Frontend setup (new terminal)
-cd ../client
-npm install
-```
+    npm run dev
 
-You also need **MongoDB** running — either locally (`mongod`) or a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster.
+### Install frontend dependencies
 
-## Environment Variables
+Open another terminal:
 
-Create `.env` at the project root (see `.env.example`):
+    cd client
+    npm install
 
-| Variable      | Required | Description                                              |
-| ------------- | -------- | -------------------------------------------------------- |
-| `MONGODB_URI` | Yes      | MongoDB connection string                                |
-| `JWT_SECRET`  | Yes      | Long random string used to sign tokens                   |
-| `PORT`        | No       | API port (default `5000`)                                |
-| `FRONTEND_URL`| No       | Allowed CORS origin(s), comma-separated (default `http://localhost:5173`) |
-| `NODE_ENV`    | No       | Set to `production` to serve the built frontend          |
+### Start the frontend
 
-## Running Locally
+    npm run dev
 
-```bash
-# Terminal 1 — backend (http://localhost:5000)
-cd server
-npm run dev        # or: npm start
+The frontend will normally run on the Vite development server.
 
-# Terminal 2 — frontend (http://localhost:5173)
-cd client
-npm run dev
-```
+---
 
-Optional demo data (creates `demo@linkgraveyard.dev` / `demo1234` with 10 links in different states):
+## 🔑 Environment Variables
 
-```bash
-cd server
-npm run seed            # add demo data
-npm run seed -- --reset # remove it again
-```
+### Backend
 
-Run the backend test suite:
+    MONGODB_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+    FRONTEND_URL=your_frontend_url
 
-```bash
-cd server
-npm test
-```
+### Frontend
 
-Production build (serves frontend + API from one server):
+For production:
 
-```bash
-cd client && npm run build
-cd ../server && NODE_ENV=production npm start
-```
+    VITE_API_URL=your_backend_api_url
 
-## Screenshots
+The production frontend uses the deployed Render API.
 
-> Add screenshots here after running the app:
->
-> - `docs/landing.png` — landing page hero
-> - `docs/dashboard.png` — dashboard with health overview
-> - `docs/links.png` — My Links with filters
-> - `docs/detail.png` — link detail + history timeline
+---
 
-## Future Improvements
+## 🚀 Production Deployment
 
-- Scheduled automatic checks (e.g. weekly) with a simple cron job — currently all checks are manual
-- Email notification when a link breaks
-- Browser extension for one-click saving
-- Import bookmarks from browsers
-- Export links (CSV/JSON)
-- Full-page snapshots via the Wayback Machine
-- Per-category health breakdowns
+The project is deployed using separate frontend and backend services.
 
-## Limitations
+### Frontend — Vercel
 
-- Checks are **manual** — nothing re-checks links automatically on a schedule.
-- No email/push notifications when a link breaks.
-- Some sites block non-browser requests or require JavaScript, so a "broken" result occasionally means "blocked the checker", not "page is gone".
-- The link checker runs in the request cycle (no background queue), so very large collections take a while to check all at once.
-- Auth tokens live in `localStorage` (simple and explainable); httpOnly cookies would be the next hardening step.
+The React/Vite application is deployed on Vercel.
 
-## Interview Summary
+The Vercel project uses the `client` directory as its root directory.
 
-> "LinkGraveyard is a full-stack MERN app I built to solve link rot — the problem that saved bookmarks silently go dead over time. Users save URLs with notes, categories and tags. The backend checks each URL with a real HTTP request and classifies it as healthy, redirected, or broken, and every check is stored in a history timeline so you can see when a resource changed. The key design decisions: redirects never overwrite the original URL, temporary failures are marked unknown rather than broken, and every query is scoped to the logged-in user so accounts are fully isolated."
+The project includes:
 
-## Resume Bullet Points
+    client/vercel.json
 
-- Built **LinkGraveyard**, a full-stack MERN app that monitors the health of saved web resources — URL saving with categories/tags, on-demand health checks, redirect detection, and a per-link status history timeline.
-- Implemented JWT authentication with bcrypt password hashing, ownership-scoped MongoDB queries, and input validation; wrote 13 backend API tests (auth, CRUD, ownership isolation, checker classification) with supertest + mongodb-memory-server.
-- Designed the link-checking service: single HTTP request with redirects disabled, HTTP-status-based classification (2xx/3xx/4xx/5xx), 12s timeouts, and SSRF guards blocking private/internal targets; verified end-to-end with a 24-step headless-browser test run.
+This configuration rewrites application routes to `index.html`, allowing React Router pages such as `/dashboard`, `/links`, `/add`, and `/settings` to work correctly after a browser refresh.
 
-## Author
+### Backend — Render
 
-- **Name:** [Your Name]
-- **GitHub:** [https://github.com/your-username]
-- **LinkedIn:** [https://www.linkedin.com/in/your-profile]
+The Node.js/Express application is deployed on Render.
+
+The Render service uses the `server` directory as its root directory.
+
+### Database — MongoDB Atlas
+
+MongoDB Atlas is used as the production database.
+
+Production credentials are configured through Render environment variables.
+
+---
+
+## 🧪 Testing
+
+The backend includes automated test support using:
+
+- Node.js test runner
+- Supertest
+- MongoDB Memory Server
+
+Run backend tests with:
+
+    cd server
+    npm test
+
+---
+
+## 🔌 API Overview
+
+The backend exposes REST endpoints for authentication and link management.
+
+### Authentication
+
+    POST   /api/auth/register
+    POST   /api/auth/login
+    GET    /api/auth/me
+    PUT    /api/auth/profile
+    PUT    /api/auth/password
+    DELETE /api/auth/account
+
+### Links
+
+Link endpoints support operations such as:
+
+- Create a link
+- Read links
+- Read one link
+- Update a link
+- Delete a link
+- Check link health
+- Check multiple links
+- Read link history
+
+The exact endpoint implementation is available in the backend route files.
+
+---
+
+## 🎯 Why I Built This
+
+Traditional bookmarks are useful for storing URLs, but they provide little visibility into whether those resources are still available.
+
+LinkGraveyard was built around a practical problem:
+
+> What happens to the important links we save today when those pages move, redirect, or disappear later?
+
+The project combines:
+
+- CRUD operations
+- Authentication
+- REST APIs
+- MongoDB
+- Server-side HTTP requests
+- Link status classification
+- History tracking
+- Production deployment
+
+into one practical full-stack application.
+
+---
+
+## 💡 Key Technical Decisions
+
+### Why React?
+
+React provides a component-based approach for building the dashboard, forms, navigation, and reusable UI components.
+
+### Why Express?
+
+Express keeps the backend lightweight and makes it straightforward to organize REST API routes and middleware.
+
+### Why MongoDB?
+
+The application stores documents containing categories, tags, status information, and historical checks, making MongoDB a suitable choice.
+
+### Why JWT?
+
+JWT provides a straightforward authentication mechanism between the frontend and backend.
+
+### Why server-side link checking?
+
+Checking URLs from the backend allows the application to consistently record:
+
+- HTTP status
+- Redirects
+- Response timing
+- Network failures
+
+without depending on browser restrictions.
+
+### Why Vercel + Render?
+
+The frontend and backend have different deployment requirements.
+
+Vercel provides a convenient deployment environment for the Vite frontend, while Render provides a straightforward deployment environment for the Node/Express API.
+
+---
+
+## 📸 Screenshots
+
+Recommended screenshots:
+
+- Landing page
+- Login/Register
+- Dashboard
+- My Links
+- Add Link
+- Link Details
+- Link History
+- Settings
+- Mobile responsive view
+
+Screenshots can be added to a `screenshots/` directory and referenced here.
+
+---
+
+## 📚 Interview Preparation
+
+The repository includes:
+
+    INTERVIEW_QA.md
+
+It covers questions such as:
+
+- Explain the project.
+- Why did you choose the MERN stack?
+- How does JWT authentication work?
+- How are passwords secured?
+- How does link health checking work?
+- How do you detect redirects?
+- How does the frontend communicate with the backend?
+- How is user data isolated?
+- Why is MongoDB used?
+- How is the application deployed?
+- What security concerns exist when a server checks user-provided URLs?
+- What would you improve in a future version?
+
+The goal is to make the project understandable enough to explain during a technical interview rather than relying on unexplained abstractions.
+
+---
+
+## 📈 Future Improvements
+
+Possible future improvements include:
+
+- Scheduled automatic link checks
+- Email notifications for broken resources
+- Better analytics and health trends
+- Import/export of saved links
+- Browser extension
+- Advanced search
+- More detailed link-change detection
+- Custom domains
+- More comprehensive automated tests
+
+These are intentionally outside the current core scope so the application remains relatively simple and explainable.
+
+---
+
+## 📌 Current Scope
+
+LinkGraveyard intentionally avoids unnecessary infrastructure such as:
+
+- Microservices
+- Kubernetes
+- GraphQL
+- Redis
+- Message queues
+- Complex event-driven architecture
+- AI-dependent functionality
+
+The goal is to demonstrate practical full-stack development fundamentals with a clear and explainable architecture.
+
+---
+
+## 👨‍💻 Author
+
+**Srijan Kumar**
+
+Computer Science Engineering Graduate | Full-Stack / MERN Developer
+
+- GitHub: https://github.com/srijan2312
+
+---
+
+## 📄 License
+
+This project is primarily intended as a portfolio and learning project.
